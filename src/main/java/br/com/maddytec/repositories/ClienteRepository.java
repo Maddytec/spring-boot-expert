@@ -9,7 +9,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     List<Cliente> findByNomeLike(String nome);
 
-    List<Cliente> findByNomeContaining(String nome);
+    List<Cliente> findByNomeContainingIgnoreCase(String nome);
 
     Boolean existsByEmail(String email);
 

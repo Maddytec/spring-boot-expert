@@ -32,7 +32,7 @@ public class Cliente implements Serializable {
     private Integer dddCelular;
 
     @Column(name = "celular")
-    private Integer celular;
+    private String celular;
 
     @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private List<Pedido> listaPedido;

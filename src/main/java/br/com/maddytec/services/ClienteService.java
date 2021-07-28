@@ -22,7 +22,7 @@ public class ClienteService {
     }
 
     public List<Cliente> buscarPorNomeOuSobreNome(String nome){
-        return clienteRepository.findByNomeContaining(nome);
+        return clienteRepository.findByNomeContainingIgnoreCase(nome);
     }
 
     public List<Cliente> buscarNome(String nome){
@@ -35,6 +35,10 @@ public class ClienteService {
 
     public Boolean existeEmail(String email){
         return clienteRepository.existsByEmail(email);
+    }
+
+    public void deletePorId(Long id){
+        clienteRepository.deleteById(id);
     }
 
 }
