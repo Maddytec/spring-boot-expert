@@ -2,6 +2,7 @@ package br.com.maddytec.http.controllers;
 
 import br.com.maddytec.entities.Cliente;
 import br.com.maddytec.services.ClienteService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,10 @@ import java.util.List;
 public class ClienteController {
 
     @Autowired
-    ClienteService clienteService;
+    private ClienteService clienteService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -45,4 +49,16 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody Cliente clienteRequest){
+
+      return clienteService.buscarOptionalId(id).map(
+                clienteBase -> {
+                    modelMapper.map(clienteRequest, clienteBase);
+                    clienteService.salvar(clienteBase);
+                    return ResponseEntity.noContent().build();
+                }).orElseGet(() -> ResponseEntity.notFound().build());
+        }
 }

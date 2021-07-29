@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClienteService {
@@ -31,6 +32,10 @@ public class ClienteService {
 
     public Cliente buscarId(Long id){
         return clienteRepository.findById(id).orElse(null);
+    }
+
+    public Optional<Cliente> buscarOptionalId(Long id){
+        return clienteRepository.findById(id);
     }
 
     public Boolean existeEmail(String email){
