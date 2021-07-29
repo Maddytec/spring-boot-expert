@@ -4,6 +4,8 @@ import br.com.maddytec.entities.Cliente;
 import br.com.maddytec.services.ClienteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,4 +63,10 @@ public class ClienteController {
                     return ResponseEntity.noContent().build();
                 }).orElseGet(() -> ResponseEntity.notFound().build());
         }
+
+    @GetMapping("/filtro")
+    public ResponseEntity filtro(Cliente filtro){
+       List<Cliente> clienteList = clienteService.filtro(filtro);
+       return ResponseEntity.ok(clienteList);
+    }
 }

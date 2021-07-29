@@ -3,6 +3,8 @@ package br.com.maddytec.services;
 import br.com.maddytec.entities.Cliente;
 import br.com.maddytec.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +23,15 @@ public class ClienteService {
     public List<Cliente> listaCliente(){
         return clienteRepository.findAll();
     }
+
+    public List<Cliente> filtro(Cliente filtro){
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching()
+                .withIgnoreCase()
+                .withStringMatcher( ExampleMatcher.StringMatcher.CONTAINING);
+        Example example = Example.of(filtro, exampleMatcher);
+        return clienteRepository.findAll(example);
+    }
+
 
     public List<Cliente> buscarPorNomeOuSobreNome(String nome){
         return clienteRepository.findByNomeContainingIgnoreCase(nome);
