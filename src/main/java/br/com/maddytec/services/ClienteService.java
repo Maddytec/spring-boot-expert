@@ -41,8 +41,8 @@ public class ClienteService {
         return clienteRepository.findByNomeLike(nome);
     }
 
-    public Cliente buscarId(Long id){
-        return clienteRepository.findById(id).orElse(null);
+    public Optional<Cliente> buscarPorId(Long id){
+        return clienteRepository.findById(id);
     }
 
     public Optional<Cliente> buscarOptionalId(Long id){

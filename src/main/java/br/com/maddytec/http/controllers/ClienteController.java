@@ -4,11 +4,9 @@ import br.com.maddytec.entities.Cliente;
 import br.com.maddytec.services.ClienteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class ClienteController {
 
     @Autowired
     private ClienteService clienteService;
-
+    
     @Autowired
     private ModelMapper modelMapper;
 
@@ -35,6 +33,13 @@ public class ClienteController {
         return clienteService.buscarPorNomeOuSobreNome(nome);
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Cliente nomeCliente(@PathVariable("id") Long id){
+        return clienteService.buscarPorId(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não Cadastrado."));
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente salvar(@RequestBody Cliente cliente){
@@ -42,31 +47,29 @@ public class ClienteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deletePorId(@PathVariable("id") Long id){
-        Cliente cliente = clienteService.buscarId(id);
-        if(cliente != null){
-            clienteService.deletePorId(cliente.getId());
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePorId(@PathVariable("id") Long id){
+        clienteService.buscarPorId(id)
+                .map( cliente -> {
+                    clienteService.buscarPorId(cliente.getId());
+                        return cliente;
+                }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody Cliente clienteRequest){
-
-      return clienteService.buscarOptionalId(id).map(
+    public void atualizar(@PathVariable("id") Long id, @RequestBody Cliente clienteRequest){
+      clienteService.buscarOptionalId(id).map(
                 clienteBase -> {
                     modelMapper.map(clienteRequest, clienteBase);
                     clienteService.salvar(clienteBase);
-                    return ResponseEntity.noContent().build();
-                }).orElseGet(() -> ResponseEntity.notFound().build());
+                    return clienteBase;
+                }).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         }
 
     @GetMapping("/filtro")
-    public ResponseEntity filtro(Cliente filtro){
-       List<Cliente> clienteList = clienteService.filtro(filtro);
-       return ResponseEntity.ok(clienteList);
+    @ResponseStatus(HttpStatus.OK)
+    public List<Cliente> filtro(Cliente filtro){
+       return clienteService.filtro(filtro);
     }
 }
