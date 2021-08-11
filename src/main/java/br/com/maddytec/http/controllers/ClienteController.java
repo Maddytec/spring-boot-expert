@@ -2,6 +2,8 @@ package br.com.maddytec.http.controllers;
 
 import br.com.maddytec.entities.Cliente;
 import br.com.maddytec.services.ClienteService;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,50 +1,24 @@
 package br.com.maddytec.services;
 
 import br.com.maddytec.entities.Produto;
-import br.com.maddytec.repositories.ProdutoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class ProdutoService {
+public interface ProdutoService {
 
-    @Autowired
-    private ProdutoRepository produtoRepository;
+    public Produto salvar(Produto produto);
 
-    @Autowired
-    ExampleMatcher exampleMatcher;
+    public List<Produto> lista();
 
-    public Produto salvar(Produto produto){
-        return produtoRepository.save(produto);
-    }
+    public void atualizar(Produto produto);
 
-    public List<Produto> lista(){
-        return produtoRepository.findAll();
-    }
+    public void remover(Long id);
 
-    public void atualizar(Produto produto){
-        produtoRepository.save(produto);
-    }
+    public Optional<Produto> buscarPorId(Long id);
 
-    public void remover(Long id){
-        produtoRepository.deleteById(id);
-    }
+    public void deletePorId(Long id);
 
-    public Optional<Produto> buscarPorId(Long id) {
-        return produtoRepository.findById(id);
-    }
-
-    public void deletePorId(Long id) {
-        produtoRepository.deleteById(id);
-    }
-
-    public List<Produto> filtro(Produto filtro){
-        Example example = Example.of(filtro, exampleMatcher);
-        return produtoRepository.findAll(example);
-    }
+    public List<Produto> filtro(Produto filtro);
 }

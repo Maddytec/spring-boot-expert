@@ -30,7 +30,7 @@ public class Pedido implements Serializable {
     @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
 
-    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<ItemPedido> listaItemPedido;
 
     @Override
