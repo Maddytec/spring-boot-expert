@@ -1,6 +1,7 @@
 package br.com.maddytec.http.controllers;
 
 import br.com.maddytec.exception.NegocioException;
+import br.com.maddytec.http.ErrorMsg;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
