@@ -1,4 +1,4 @@
-package br.com.maddytec.http.controllers;
+package br.com.maddytec.http;
 
 import lombok.Getter;
 
