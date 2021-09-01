@@ -2,7 +2,6 @@ package br.com.maddytec.repositories;
 
 import br.com.maddytec.entities.Cliente;
 import br.com.maddytec.entities.Pedido;
-import br.com.maddytec.http.controllers.response.PedidoResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

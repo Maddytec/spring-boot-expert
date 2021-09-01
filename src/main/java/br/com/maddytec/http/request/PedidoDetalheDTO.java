@@ -1,6 +1,6 @@
-package br.com.maddytec.http.controllers.request;
+package br.com.maddytec.http.request;
 
-import br.com.maddytec.http.controllers.response.DetalheItemPedidoResponse;
+import br.com.maddytec.http.response.DetalheItemPedidoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

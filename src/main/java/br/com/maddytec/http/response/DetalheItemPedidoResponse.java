@@ -1,4 +1,4 @@
-package br.com.maddytec.http.controllers.response;
+package br.com.maddytec.http.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

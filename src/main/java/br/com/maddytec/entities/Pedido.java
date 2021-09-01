@@ -1,5 +1,6 @@
 package br.com.maddytec.entities;
 
+import br.com.maddytec.enums.StatusPedidoEnum;
 import lombok.*;
 
 import javax.persistence.*;
@@ -8,12 +9,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@EqualsAndHashCode(of = "id")
 public class Pedido implements Serializable {
 
     @Id
@@ -29,6 +30,10 @@ public class Pedido implements Serializable {
 
     @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private StatusPedidoEnum statusPedido;
 
     @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<ItemPedido> itens;

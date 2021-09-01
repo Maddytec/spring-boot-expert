@@ -1,4 +1,4 @@
-package br.com.maddytec.http.controllers.request;
+package br.com.maddytec.http.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -7,15 +7,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ItemPedidoDTO implements Serializable {
+public class PedidoRequest implements Serializable {
 
-    private Long produto;
-    private Long quantidade;
+    private Long cliente;
+    private BigDecimal total;
+    private List<ItemPedidoDTO> itens;
 
 }

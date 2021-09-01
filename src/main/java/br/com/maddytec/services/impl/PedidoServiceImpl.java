@@ -3,9 +3,9 @@ package br.com.maddytec.services.impl;
 import br.com.maddytec.entities.ItemPedido;
 import br.com.maddytec.entities.Pedido;
 import br.com.maddytec.entities.Produto;
+import br.com.maddytec.enums.StatusPedidoEnum;
 import br.com.maddytec.exception.NegocioException;
-import br.com.maddytec.http.controllers.request.PedidoRequest;
-import br.com.maddytec.http.controllers.response.PedidoResponse;
+import br.com.maddytec.http.request.PedidoRequest;
 import br.com.maddytec.repositories.ClienteRepository;
 import br.com.maddytec.repositories.PedidoRepository;
 import br.com.maddytec.repositories.ProdutoRepository;
@@ -32,6 +32,7 @@ public class PedidoServiceImpl implements PedidoService {
         Pedido pedido = Pedido.builder()
                 .total(pedidoDTO.getTotal())
                 .dataPedido(LocalDate.now())
+                .statusPedido(StatusPedidoEnum.REALIZADO)
                 .build();
 
         setCliente(pedidoDTO, pedido);
@@ -67,8 +68,8 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setItens(listaItemPedido);
     }
 
-    private void setCliente(PedidoRequest pedidoDTO, Pedido pedido) {
-        clienteRepository.findById(pedidoDTO.getCliente())
+    private void setCliente(PedidoRequest pedidoRequest, Pedido pedido) {
+        clienteRepository.findById(pedidoRequest.getCliente())
                 .map(cliente -> {
                     pedido.setCliente(cliente);
                     return cliente;

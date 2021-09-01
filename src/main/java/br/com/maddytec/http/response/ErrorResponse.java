@@ -1,16 +1,16 @@
-package br.com.maddytec.http;
+package br.com.maddytec.http.response;
 
 import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class ErrorMsg {
+public class ErrorResponse {
 
     @Getter
     private List<String> errors;
 
-    public ErrorMsg (String mensageError){
+    public ErrorResponse (String mensageError){
         this.errors = Arrays.asList(mensageError);
     }
 }

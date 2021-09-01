@@ -1,10 +1,9 @@
-package br.com.maddytec.http.controllers.response;
+package br.com.maddytec.http.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,6 +18,7 @@ public class PedidoResponse {
     private String nomeCliente;
     private BigDecimal total;
     private String dataPedido;
+    private String statusPedido;
     private List<DetalheItemPedidoResponse> itens;
 
 }

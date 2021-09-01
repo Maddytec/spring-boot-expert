@@ -1,9 +1,9 @@
 package br.com.maddytec.http.controllers;
 
 import br.com.maddytec.entities.Pedido;
-import br.com.maddytec.http.controllers.request.PedidoRequest;
-import br.com.maddytec.http.controllers.response.DetalheItemPedidoResponse;
-import br.com.maddytec.http.controllers.response.PedidoResponse;
+import br.com.maddytec.http.request.PedidoRequest;
+import br.com.maddytec.http.response.DetalheItemPedidoResponse;
+import br.com.maddytec.http.response.PedidoResponse;
 import br.com.maddytec.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,6 +53,7 @@ public class PedidoController {
                             .nomeCliente(pedido.getCliente().getNome())
                             .total(pedido.getTotal())
                             .itens(detalheItens)
+                            .statusPedido(pedido.getStatusPedido().name())
                             .build();
                 }).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não encontrado"));
     }
