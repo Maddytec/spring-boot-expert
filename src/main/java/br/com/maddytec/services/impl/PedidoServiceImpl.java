@@ -4,9 +4,9 @@ import br.com.maddytec.entities.ItemPedido;
 import br.com.maddytec.entities.Pedido;
 import br.com.maddytec.entities.Produto;
 import br.com.maddytec.exception.NegocioException;
-import br.com.maddytec.http.controllers.dto.PedidoDTO;
+import br.com.maddytec.http.controllers.request.PedidoRequest;
+import br.com.maddytec.http.controllers.response.PedidoResponse;
 import br.com.maddytec.repositories.ClienteRepository;
-import br.com.maddytec.repositories.ItemPedidoRepository;
 import br.com.maddytec.repositories.PedidoRepository;
 import br.com.maddytec.repositories.ProdutoRepository;
 import br.com.maddytec.services.PedidoService;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +28,7 @@ public class PedidoServiceImpl implements PedidoService {
     private final ProdutoRepository produtoRepository;
 
     @Transactional
-    public Pedido salvar(PedidoDTO pedidoDTO){
+    public Pedido salvar(PedidoRequest pedidoDTO){
         Pedido pedido = Pedido.builder()
                 .total(pedidoDTO.getTotal())
                 .dataPedido(LocalDate.now())
@@ -39,8 +40,18 @@ public class PedidoServiceImpl implements PedidoService {
         return pedido;
     }
 
-    private void setListaItemPedido(PedidoDTO pedidoDTO, Pedido pedido) {
-        List<ItemPedido> listaItemPedido = pedidoDTO.getListaItemPedido().stream()
+    @Override
+    public Optional<Pedido> obterPedidoPorId(Long idPedido) {
+        return pedidoRepository.obterPedidoPorId(idPedido);
+    }
+
+    @Override
+    public List<Pedido> listarPedidos() {
+        return pedidoRepository.findAll();
+    }
+
+    private void setListaItemPedido(PedidoRequest pedidoDTO, Pedido pedido) {
+        List<ItemPedido> listaItemPedido = pedidoDTO.getItens().stream()
                 .map(itemPedidoDTO -> {
                     Produto produto = produtoRepository.findById(itemPedidoDTO.getProduto())
                             .orElseThrow(() -> new NegocioException("Produto não encontrado."));
@@ -53,10 +64,10 @@ public class PedidoServiceImpl implements PedidoService {
 
                 }).collect(Collectors.toList());
 
-        pedido.setListaItemPedido(listaItemPedido);
+        pedido.setItens(listaItemPedido);
     }
 
-    private void setCliente(PedidoDTO pedidoDTO, Pedido pedido) {
+    private void setCliente(PedidoRequest pedidoDTO, Pedido pedido) {
         clienteRepository.findById(pedidoDTO.getCliente())
                 .map(cliente -> {
                     pedido.setCliente(cliente);

@@ -31,15 +31,5 @@ public class Pedido implements Serializable {
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private List<ItemPedido> listaItemPedido;
-
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", dataPedido=" + dataPedido +
-                ", total=" + total +
-                ", listaItemPedido=" + listaItemPedido +
-                '}';
-    }
+    private List<ItemPedido> itens;
 }

@@ -1,4 +1,4 @@
-package br.com.maddytec.http.controllers.dto;
+package br.com.maddytec.http.controllers.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ItemsPedidoDTO implements Serializable {
+public class ItemPedidoDTO implements Serializable {
 
     private Long produto;
     private Long quantidade;

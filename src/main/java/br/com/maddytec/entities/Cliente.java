@@ -37,16 +37,4 @@ public class Cliente implements Serializable {
     @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private List<Pedido> listaPedido;
 
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", dddCelular=" + dddCelular +
-                ", celular=" + celular +
-                ", listaPedido=" + listaPedido +
-                '}';
-    }
 }
