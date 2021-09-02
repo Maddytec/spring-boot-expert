@@ -1,7 +1,9 @@
 package br.com.maddytec.http.controllers;
 
 import br.com.maddytec.entities.Pedido;
+import br.com.maddytec.enums.StatusPedidoEnum;
 import br.com.maddytec.http.request.PedidoRequest;
+import br.com.maddytec.http.request.StatusPedidoRequest;
 import br.com.maddytec.http.response.DetalheItemPedidoResponse;
 import br.com.maddytec.http.response.PedidoResponse;
 import br.com.maddytec.services.PedidoService;
@@ -11,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.websocket.server.PathParam;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
@@ -61,5 +64,11 @@ public class PedidoController {
     @GetMapping
     public List<Pedido> listarPedidos() {
         return pedidoService.listarPedidos();
+    }
+
+    @PatchMapping("{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void atualizarStatusPedido(@PathVariable("id") Long id, @RequestBody StatusPedidoRequest statusPedidoRequest){
+        pedidoService.atualizarStatusPedido(id, StatusPedidoEnum.valueOf(statusPedidoRequest.getStatus()));
     }
 }

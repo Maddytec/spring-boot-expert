@@ -1,6 +1,7 @@
 package br.com.maddytec.services;
 
 import br.com.maddytec.entities.Pedido;
+import br.com.maddytec.enums.StatusPedidoEnum;
 import br.com.maddytec.http.request.PedidoRequest;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface PedidoService {
     public Optional<Pedido> obterPedidoPorId(Long idPedido);
 
     public List<Pedido> listarPedidos();
+
+    public void atualizarStatusPedido(Long id, StatusPedidoEnum statusPedidoEnum);
 }

@@ -5,6 +5,7 @@ import br.com.maddytec.entities.Pedido;
 import br.com.maddytec.entities.Produto;
 import br.com.maddytec.enums.StatusPedidoEnum;
 import br.com.maddytec.exception.NegocioException;
+import br.com.maddytec.exception.PedidoNaoEncontradoException;
 import br.com.maddytec.http.request.PedidoRequest;
 import br.com.maddytec.repositories.ClienteRepository;
 import br.com.maddytec.repositories.PedidoRepository;
@@ -49,6 +50,15 @@ public class PedidoServiceImpl implements PedidoService {
     @Override
     public List<Pedido> listarPedidos() {
         return pedidoRepository.findAll();
+    }
+
+    @Override
+    public void atualizarStatusPedido(Long id, StatusPedidoEnum statusPedidoEnum) {
+        pedidoRepository.findById(id)
+                .map( pedido -> {
+                        pedido.setStatusPedido(statusPedidoEnum);
+                        return pedidoRepository.save(pedido);
+                        }).orElseThrow(() -> new PedidoNaoEncontradoException());
     }
 
     private void setListaItemPedido(PedidoRequest pedidoDTO, Pedido pedido) {
