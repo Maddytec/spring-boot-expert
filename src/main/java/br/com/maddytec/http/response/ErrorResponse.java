@@ -10,6 +10,10 @@ public class ErrorResponse {
     @Getter
     private List<String> errors;
 
+    public ErrorResponse(List<String> errors) {
+        this.errors = errors;
+    }
+
     public ErrorResponse (String mensageError){
         this.errors = Arrays.asList(mensageError);
     }

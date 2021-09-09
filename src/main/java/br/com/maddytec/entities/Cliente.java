@@ -3,6 +3,7 @@ package br.com.maddytec.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class Cliente implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @NotEmpty(message = "Campo nome é obrigatório.")
     @Column(name = "nome", length = 100, nullable = false)
     private String nome;
 
