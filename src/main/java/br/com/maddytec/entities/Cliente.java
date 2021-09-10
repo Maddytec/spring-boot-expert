@@ -1,8 +1,12 @@
 package br.com.maddytec.entities;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.List;
@@ -21,15 +25,20 @@ public class Cliente implements Serializable {
     private Long id;
 
     @NotEmpty(message = "Campo nome é obrigatório.")
+    @Length(min = 3, message = "O campo nome deve possuir no minimo 3 letras")
+    @Length(max = 100, message = "O campo nome deve possuir no maximo 100 letras")
     @Column(name = "nome", length = 100, nullable = false)
     private String nome;
 
+    @Email(message = "Email invalido.")
     @Column(name = "email")
     private String email;
 
+    @CPF(message = "CPF invalido.")
     @Column(name = "cpf")
     private String cpf;
 
+    @Min(value = 10L, message = "DDD invalido.")
     @Column(name = "ddd")
     private Integer dddCelular;
 
