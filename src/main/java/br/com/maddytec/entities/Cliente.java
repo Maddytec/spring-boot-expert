@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -34,7 +35,8 @@ public class Cliente implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @CPF(message = "CPF invalido.")
+    @NotNull(message = "{campo.cpf.obrigatorio}")
+    @CPF(message = "{campo.cpf.invalido}")
     @Column(name = "cpf")
     private String cpf;
 
