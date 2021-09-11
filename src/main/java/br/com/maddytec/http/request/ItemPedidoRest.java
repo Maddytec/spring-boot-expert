@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ItemPedidoDTO implements Serializable {
+public class ItemPedidoRest implements Serializable {
 
     private Long produto;
     private Long quantidade;

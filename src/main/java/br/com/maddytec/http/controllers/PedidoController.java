@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -28,8 +29,8 @@ public class PedidoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long salvar(@RequestBody PedidoRequest pedidoDTO){
-        Pedido pedido = pedidoService.salvar(pedidoDTO);
+    public Long salvar(@Valid @RequestBody PedidoRequest pedidoRequest){
+        Pedido pedido = pedidoService.salvar(pedidoRequest);
         return pedido.getId();
     }
 

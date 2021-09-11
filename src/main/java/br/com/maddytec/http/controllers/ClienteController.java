@@ -61,7 +61,7 @@ public class ClienteController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable("id") Long id, @RequestBody Cliente clienteRequest){
+    public void atualizar(@Valid @PathVariable("id") Long id, @RequestBody Cliente clienteRequest){
       clienteService.buscarOptionalId(id).map(
                 clienteBase -> {
                     modelMapper.map(clienteRequest, clienteBase);

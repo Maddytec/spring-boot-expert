@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,13 +44,15 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto salvar(@RequestBody Produto produto){
+    public Produto salvar(@Valid @RequestBody Produto produto){
        return produtoService.salvar(produto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizar(@PathVariable("id") Long id, @RequestBody Produto produto){
+    public void atualizar(
+            @Valid @PathVariable("id") Long id
+            , @RequestBody Produto produto){
         produtoService.buscarPorId(id)
                 .map( produtoBase -> {
                    modelMapper.map(produto, produtoBase);
